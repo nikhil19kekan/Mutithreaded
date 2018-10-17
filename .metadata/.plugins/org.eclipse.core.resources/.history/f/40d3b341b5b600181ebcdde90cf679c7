@@ -1,0 +1,36 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
+
+public class ServerService extends Server implements Runnable{
+	private Socket client=null;
+	private ObjectInputStream is=null;
+	private BufferedReader bf= null;
+	PrintWriter pw=null;
+	
+	public ServerService(Socket client) throws IOException {
+		this.client=client;
+		pw=new PrintWriter(client.getOutputStream());
+		bf=new BufferedReader(new InputStreamReader(client.getInputStream()));
+	}
+	@Override
+	public void run() {
+		int c;
+		String str=null;
+		StringBuilder bld=new StringBuilder(10);
+		try{
+			while(client.isConnected()){
+				bld.setLength(0);
+				while((str=bf.readLine())!=null){
+					System.out.println(str);
+					ServerWindow.write(str);
+				}
+			}
+		}catch(Exception e){
+			
+		}
+	}
+}

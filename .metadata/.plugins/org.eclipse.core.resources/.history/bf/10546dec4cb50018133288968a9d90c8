@@ -1,0 +1,20 @@
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+public class Client extends Thread{
+	Socket clientSocket=null;
+	InputStream is=null;
+	
+	Client() throws UnknownHostException, IOException{
+		ClientWindow window=new ClientWindow();
+		clientSocket=new Socket("http://localhost:8080", 8080);
+	}
+	
+	@Override
+	public void run() {
+		
+	}
+
+}

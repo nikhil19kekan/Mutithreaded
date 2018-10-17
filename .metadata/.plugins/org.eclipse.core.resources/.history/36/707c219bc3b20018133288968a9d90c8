@@ -1,0 +1,13 @@
+import javax.swing.JFrame;
+
+public class ServerWindow {
+	public JFrame  serverFrame;
+	
+	public ServerWindow() {
+		serverFrame=new JFrame();
+		serverFrame.setTitle("Server");
+		serverFrame.setSize(500, 500);
+		serverFrame.setResizable(false);
+		serverFrame.setVisible(true);
+	}
+}

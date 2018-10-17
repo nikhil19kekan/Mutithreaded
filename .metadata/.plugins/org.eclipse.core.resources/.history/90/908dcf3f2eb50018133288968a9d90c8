@@ -1,0 +1,16 @@
+import java.net.ServerSocket;
+import java.util.List;
+
+public class Server {
+	int connectionCount;
+	List<String> clientNames;
+	ServerSocket server;
+	Server(){
+		connectionCount=0;
+		clientNames.clear();
+	}
+	public void start(){
+		server = new ServerSocket(8080);
+		System.out.println("Server started");
+	}
+}

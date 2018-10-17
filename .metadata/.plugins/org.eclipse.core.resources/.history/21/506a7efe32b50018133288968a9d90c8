@@ -1,0 +1,14 @@
+import java.net.Socket;
+
+public class Client implements Runnable{
+	Socket clientSocket=null;
+	Client(){
+		clientSocket=new Socket("http://localhost:8080", port)
+	}
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

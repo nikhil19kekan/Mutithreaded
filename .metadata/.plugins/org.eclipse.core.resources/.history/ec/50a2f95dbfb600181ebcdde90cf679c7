@@ -1,0 +1,48 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
+
+public class ServerService extends Server implements Runnable{
+	private Socket client=null;
+	private ObjectInputStream is=null;
+	private BufferedReader bf= null;
+	private String clientBeingServed=null;
+	PrintWriter pw=null;
+	
+	public ServerService(Socket client,String clientName) throws IOException {
+		this.client=client;
+		this.clientBeingServed=clientName;
+		pw=new PrintWriter(client.getOutputStream());
+		bf=new BufferedReader(new InputStreamReader(client.getInputStream()));
+	}
+	@Override
+	public void run() {
+		int waitTime;
+		try{
+			waitTime=Integer.parseInt(bf.readLine());
+			Thread.sleep(waitTime*1000);
+			pw.println("Server waited "+waitTime+" seconds for client:"+clientBeingServed);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void keepReadingText(){
+		String str=null;
+		StringBuilder bld=new StringBuilder(10);
+		try{
+			while(client.isConnected()){
+				bld.setLength(0);
+				while((str=bf.readLine())!=null){
+					System.out.println(str);
+					ServerWindow.write(str+"\n");
+				}
+			}
+		}catch(Exception e){
+			
+		}
+	}
+}

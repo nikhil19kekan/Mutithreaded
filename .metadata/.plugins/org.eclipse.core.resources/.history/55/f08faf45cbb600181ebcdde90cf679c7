@@ -1,0 +1,80 @@
+import java.awt.Color;
+import java.awt.ComponentOrientation;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
+public class ServerWindow {
+	private JFrame serverFrame;
+	private JButton startServerButton;
+	private JButton stopServerButton;
+	private JPanel serverPanel;
+	private static JTextArea serverTextArea;
+	private JScrollPane scroll;
+	private static Server server=null;
+	
+	public ServerWindow() {
+		server=new Server();
+		//create buttons
+		startServerButton=new JButton("Start Server");
+		startServerButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						server.start_server();
+					}
+				}).start();
+			}
+		});
+		stopServerButton=new JButton("Stop Server");
+		stopServerButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					server.stop_server();
+				} catch (IOException e1) {
+					System.err.println("error occurred while stopping the server");
+					e1.printStackTrace();
+				}
+			}
+		});
+		//create jtext area
+		serverTextArea = new JTextArea(20,40);
+		serverTextArea.setEditable(false);
+		scroll=new JScrollPane(serverTextArea)
+		serverTextArea.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+
+		//create a panel and add pane and then buttons
+		serverPanel = new JPanel();
+		serverPanel.setForeground(Color.cyan);
+		serverPanel.add(serverTextArea);
+		serverPanel.add(startServerButton);
+		serverPanel.add(stopServerButton);
+		
+		//create jframe and add panel
+		serverFrame=new JFrame();
+		serverFrame.setTitle("Server");
+		serverFrame.setSize(500, 400);
+		serverFrame.setLocationRelativeTo(null);
+		serverFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		serverFrame.setResizable(false);
+		serverFrame.add(serverPanel);
+		//show jframe in GUI
+		serverFrame.setVisible(true);
+		System.out.println("server window now visible");
+	}
+	public static  void write(String clientName,String str) throws IOException{
+		serverTextArea.append(clientName+":"+str+"\n");
+	}
+}

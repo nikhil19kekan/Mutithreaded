@@ -1,0 +1,4 @@
+
+public class ServerWindow {
+	public JFrame  serverFrame= new JFrame();
+}

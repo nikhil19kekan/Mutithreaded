@@ -1,0 +1,52 @@
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class Server{
+	static int connectionCount;
+	static ServerSocket server=null;
+	private static ExecutorService executor=null;
+	
+	Server(){
+		connectionCount=0;
+	}
+	
+	public void acceptConnection(){
+		Socket client=null;
+		try{
+			executor=Executors.newFixedThreadPool(3);
+			while(server.isBound() && connectionCount<2){
+				client=server.accept();
+				Runnable service= new ServerService(client);
+				executor.execute(service);
+				connectionCount++;
+			}
+		executor.shutdown();
+		executor.awaitTermination(3, null);
+		System.out.println("All threads finished executing");
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	public void start_server(){
+		try{
+			if(server==null || !server.isBound()){
+				server = new ServerSocket(8080);
+			}
+			System.out.println("Server started now accepting connections");
+			acceptConnection();
+		}catch(Exception e){
+			System.err.println("error occurred while server start");
+			e.printStackTrace();
+		}
+	}
+	
+	public void stop_server() throws IOException{
+		connectionCount=0;
+		server.close();
+	}
+}

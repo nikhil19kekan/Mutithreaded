@@ -1,0 +1,14 @@
+
+public class Test {
+
+	public static void main(String[] args) {
+	String s="abcd";
+	int shifts=4;
+	String temp1="";
+	for(int i=s.length()-shifts;i<s.length();i++){
+		String t=""+s[i];
+		temp1=temp1.concat(s[i]);
+	}
+	}
+	
+}

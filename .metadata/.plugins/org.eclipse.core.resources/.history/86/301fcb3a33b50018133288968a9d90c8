@@ -1,0 +1,15 @@
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+public class Client implements Runnable{
+	Socket clientSocket=null;
+	Client() throws UnknownHostException, IOException{
+		clientSocket=new Socket("http://localhost:8080", 8080);
+	}
+	@Override
+	public void run() {
+		
+	}
+
+}

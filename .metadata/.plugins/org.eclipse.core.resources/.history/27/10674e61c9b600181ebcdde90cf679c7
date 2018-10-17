@@ -1,0 +1,53 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.time.LocalDateTime;
+
+import javax.sound.midi.Synthesizer;
+
+public class Client{
+	Socket clientSocket=null;
+	InputStream is=null;
+	private PrintWriter pw=null;
+	String client_name=null;
+	private BufferedReader bf=null;
+	
+	public Client(String name) throws UnknownHostException, IOException, InterruptedException {
+		System.out.println(name+":Client Object created");
+		client_name=name;
+		while(clientSocket==null || !clientSocket.isConnected()){
+			try{
+				clientSocket=new Socket("localhost", 8080);
+				pw=new PrintWriter(clientSocket.getOutputStream());
+				pw.println(client_name);
+				//pw.println(LocalDateTime.now()+"\n-----------------");
+				pw.flush();
+				bf=new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			}catch(Exception e){
+				try {
+					Thread.sleep(1500);
+				} catch (InterruptedException e1) {
+					System.err.println(client_name+":Error while waiting for server to get started");
+					e1.printStackTrace();
+				}
+			}
+		}
+	}
+	public String read(){
+		try{
+			return bf.readLine();
+		}catch(Exception e){
+			System.err.println("error occurred while reading msg from server");
+		}
+	}
+	public void send(String str) throws IOException{
+		pw.println(str);
+		pw.flush();
+		System.out.println("Message sent from client to sever:"+str);
+	}
+}

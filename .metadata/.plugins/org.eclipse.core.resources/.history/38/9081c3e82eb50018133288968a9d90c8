@@ -1,0 +1,25 @@
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.List;
+
+public class Server {
+	int connectionCount;
+	List<String> clientNames=null;
+	ServerSocket server=null;;
+	Server(){
+		connectionCount=0;
+	}
+	public void start() throws IOException{
+		server = new ServerSocket(8080);
+		System.out.println("Server started");
+		while(true){
+			Socket client=server.accept();
+			System.out.println("client connection accepted");
+			client.close();
+		}
+	}
+	public void stop() throws IOException{
+		server.close();
+	}
+}

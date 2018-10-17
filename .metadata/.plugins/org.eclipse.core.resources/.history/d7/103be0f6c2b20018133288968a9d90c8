@@ -1,0 +1,9 @@
+import javax.swing.JFrame;
+
+public class ServerWindow {
+	public JFrame  serverFrame;
+	
+	public ServerWindow() {
+		serverFrame=new JFrame();
+	}
+}

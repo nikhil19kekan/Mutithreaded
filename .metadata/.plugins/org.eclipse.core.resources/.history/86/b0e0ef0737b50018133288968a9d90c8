@@ -1,0 +1,48 @@
+import java.awt.Color;
+import java.awt.Dimension;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+
+public class ClientWindow {
+	private JFrame clientFrame;
+	private JButton sendButton;
+	private JPanel clientPanel;
+	private JTextPane clientPane;
+	private JTextArea clientTextArea;
+	
+	public ClientWindow(){
+		//create buttons
+		sendButton=new JButton("Send");
+		//create textarea
+		clientTextArea = new JTextArea();
+		//create textpane
+		clientPane=new JTextPane();
+		clientPane.setPreferredSize(new Dimension(400, 450));
+		clientPane.setBounds(0, 0, 400, 450);
+		clientPane.setEditable(true);
+		clientPane.setContentType("HTML/plain");
+		clientPane.setText("");
+		//create a panel and add pane and then buttons
+		clientPanel = new JPanel();
+		clientPanel.setForeground(Color.cyan);
+		clientPanel.add(clientPane);
+		clientPanel.add(sendButton);
+		//create jframe and add panel
+		clientFrame=new JFrame();
+		clientFrame.setTitle("Client");
+		clientFrame.setSize(500, 500);
+		clientFrame.setLocationRelativeTo(null);
+		clientFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		clientFrame.setResizable(false);
+		clientFrame.add(clientPanel);
+		//show jframe in GUI
+		clientFrame.setVisible(true);
+	}
+	public void write(String str){
+		
+	}
+}

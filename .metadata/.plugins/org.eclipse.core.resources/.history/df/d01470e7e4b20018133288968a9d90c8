@@ -1,0 +1,45 @@
+import java.awt.Color;
+import java.awt.Dimension;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextPane;
+
+public class ServerWindow {
+	private JFrame serverFrame;
+	private JButton startServerButton;
+	private JButton stopServerButton;
+	private JPanel serverPanel;
+	private JTextPane serverPane;
+	
+	public ServerWindow() {
+		//create buttons
+		startServerButton=new JButton("Start Server");
+		stopServerButton=new JButton("Stop Server");
+		//create serverpane
+		serverPane=new JTextPane();
+		serverPane.setPreferredSize(new Dimension(400, 400));
+		serverPane.setBounds(30, 0, 400, 400);
+		serverPane.setEditable(false);
+		serverPane.setContentType("HTML/plain");
+		serverPane.setText("Here messages sent by clients will display");
+		
+		serverPanel = new JPanel();
+		serverPanel.setForeground(Color.cyan);
+		serverPanel.add(serverPane);
+		serverPanel.add(startServerButton);
+		serverPanel.add(stopServerButton);
+		
+		serverFrame=new JFrame();
+		serverFrame.setTitle("Server");
+		serverFrame.add(serverPanel);
+		
+		serverFrame.setSize(500, 500);
+		serverFrame.setLocationRelativeTo(null);
+		serverFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		serverFrame.setResizable(false);
+		serverFrame.setVisible(true);
+		
+	}
+}

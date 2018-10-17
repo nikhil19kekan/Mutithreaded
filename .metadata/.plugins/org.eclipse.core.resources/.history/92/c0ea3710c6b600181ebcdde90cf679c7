@@ -1,0 +1,11 @@
+import java.io.IOException;
+
+public class Main {
+
+	public static void main(String[] args) throws IOException, InterruptedException {
+		ServerWindow serverWindow = new ServerWindow();
+		ClientWindow client1 = new ClientWindow("client1");
+		ClientWindow client2 = new ClientWindow("client2");
+		ClientWindow client3 = new ClientWindow("client3");
+	}
+}

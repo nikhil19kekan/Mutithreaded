@@ -1,0 +1,31 @@
+import java.awt.Color;
+import java.awt.FlowLayout;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.ListSelectionModel;
+
+public class ServerWindow {
+	public JFrame serverFrame;
+	public JButton startServerButton;
+	public JButton stopServerButton;
+	public JPanel serverPanel;
+	
+	public ServerWindow() {
+		startServerButton=new JButton("Start Server");
+		stopServerButton=new JButton("Stop Server");
+	
+		serverPanel = new JPanel();
+		serverPanel.add(startServerButton);
+		serverFrame=new JFrame();
+		serverFrame.setTitle("Server");
+		serverFrame.setSize(500, 500);
+		serverFrame.add(startServerButton);
+		serverFrame.add(stopServerButton);
+		serverFrame.setLayout(null);
+		serverFrame.setVisible(true);
+	}
+}

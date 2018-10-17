@@ -1,0 +1,83 @@
+import java.awt.Color;
+import java.awt.ComponentOrientation;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.UnknownHostException;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+
+public class ClientWindow{
+	public JFrame clientFrame;
+	public JButton sendButton;
+	public JPanel clientPanel;
+	public JTextPane clientPane;
+	public JTextArea clientTextArea;
+	public JTextPane clientMessagePane;
+	public JTextArea clientMessage;
+	public String client_name;
+	public Client client=null;
+	
+	public ClientWindow(String name) throws UnknownHostException, IOException, InterruptedException{
+		this.client_name=name;
+		client=new Client(name);
+		//create textarea
+		clientTextArea = new JTextArea(20,40);
+		clientTextArea.setEditable(false);
+		clientTextArea.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		clientMessage = new JTextArea(5,40);
+		clientMessage.setEditable(true);
+		clientMessage.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+	
+		//create buttons
+		sendButton=new JButton("Send");				
+		sendButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						try {
+							client.send(clientMessage.getText());
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}).start();
+			}
+		});
+		
+		//create a panel and add pane and then buttons
+		clientPanel = new JPanel();
+		clientPanel.setForeground(Color.cyan);
+		clientPanel.add(clientTextArea);
+		clientPanel.add(clientMessage);
+		clientPanel.add(sendButton);
+
+		//create jframe and add panel
+		clientFrame=new JFrame();
+		clientFrame.setTitle(this.client_name);
+		clientFrame.setSize(450, 490);
+		clientFrame.setLocationRelativeTo(null);
+		clientFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		clientFrame.setResizable(false);
+		clientFrame.add(clientPanel);
+		
+		//show jframe in GUI
+		clientFrame.setVisible(true);
+		System.out.println("clientwindiw now visible");
+	}
+	
+	public void write(String str){
+		this.clientTextArea.append(str);
+	}
+}

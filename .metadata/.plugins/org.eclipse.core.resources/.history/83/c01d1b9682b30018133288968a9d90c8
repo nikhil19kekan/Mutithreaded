@@ -1,0 +1,14 @@
+
+public class Main {
+
+	public static void main(String[] args) {
+		ServerWindow server = new ServerWindow();
+		ClientWindow client = new ClientWindow();
+	}
+	
+	for(int i=0;i<4;i++){
+		int arr[23];
+		
+	}
+
+}
