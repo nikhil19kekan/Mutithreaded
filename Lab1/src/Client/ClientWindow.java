@@ -10,8 +10,11 @@ import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 /*
  * This is UI for Client
@@ -24,6 +27,7 @@ public class ClientWindow{
 	public JPanel clientPanel;
 	public JTextPane clientPane;
 	public static JTextArea clientTextArea;
+	public JScrollPane scroll;
 	public JTextArea clientNameTextArea;
 	public JTextPane clientMessagePane;
 	public String client_name;
@@ -35,7 +39,9 @@ public class ClientWindow{
 		//Client Text Area
 		clientTextArea = new JTextArea(20,50);
 		clientTextArea.setEditable(false);
-		clientTextArea.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);	
+		clientTextArea.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+	    scroll = new JScrollPane(clientTextArea);
+	    scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	
 		clientNameTextArea = new JTextArea(5,50);
 		clientNameTextArea.setEditable(true);
@@ -110,7 +116,7 @@ public class ClientWindow{
 		clientPanel = new JPanel();
 		clientPanel.setForeground(Color.cyan);
 		//add buttons to panel
-		clientPanel.add(clientTextArea);
+		clientPanel.add(scroll);
 		clientPanel.add(clientNameTextArea);
 		clientPanel.add(sendRandomNumberButton);
 		clientPanel.add(sendClientNameButton);
@@ -146,7 +152,7 @@ public class ClientWindow{
 	}
 	public static void write(String str){
 		if(str!=null){
-			clientTextArea.append(str+"\n");
+			clientTextArea.append(str+"\n------------------");
 		}
 	}
 }
